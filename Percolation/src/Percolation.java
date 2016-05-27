@@ -71,19 +71,10 @@ public class Percolation {
 	
 	public boolean isOpen(int i, int j) {
 		if((i+j >= 2) && ((i <= N) && (j <= N)))
-			switch(sites[xyToId(i, j)]) {
-				case 0:
-					return false;
-				case 1:
-					return true;
-				case 2:
-					return true;
-				default:
-					return false;
-			}
-		else {
+			return (sites[xyToId(i, j)] > 0);
+		else 
 			throw new IndexOutOfBoundsException("Coordinates are out of range");
-		}
+		
 	}
 	
 	public boolean isFull(int i, int j) {
