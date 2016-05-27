@@ -5,7 +5,7 @@ public class Percolation {
 	
 	private int N;
 	private WeightedQuickUnionUF weightedUf;
-	private byte[] sites;
+	private boolean[] sites;
 	
 	//Virtual top: N*N
 	//Virtual bottom: N*N+1
@@ -14,10 +14,10 @@ public class Percolation {
 		//TODO: initialize N/X, all "blocked"
 		if(N > 0) {
 			this.N = N;
-			sites = new byte[N*N];
+			sites = new boolean[N*N];
 			weightedUf = new WeightedQuickUnionUF((N*N) + 2);
 			for(int i=0; i<sites.length; i++) {
-				sites[i] = 0;
+				sites[i] = false;
 				if(i >= 0 && i < N) {
 					//Virtual top
 					weightedUf.union(N*N, i);
@@ -34,34 +34,31 @@ public class Percolation {
 	//i = row, j = column
 	public void open(int i, int j) {
 		if((i+j >= 2) && ((i <= N) && (j <= N))) {
-			if(sites[xyToId(i, j)] == 0) {
-				sites[xyToId(i, j)] = 1;
+			if(!sites[xyToId(i, j)]) {
+				sites[xyToId(i, j)] = true;
 				
 				
-				if((i > 1) && (sites[xyToId(i-1, j)] != 0)) {
+				if((i > 1) && (sites[xyToId(i-1, j)])) {
 					StdOut.print("1: ");
 					weightedUf.union(xyToId(i-1, j), xyToId(i, j));
 					printStuff();
 				}
-				if((i < N) && (sites[xyToId(i+1, j)] != 0)) {
+				if((i < N) && (sites[xyToId(i+1, j)])) {
 					StdOut.print("2: ");
 					weightedUf.union(xyToId(i+1, j), xyToId(i, j));
 					printStuff();
 				}
-				if((j > 1) && (sites[xyToId(i, j-1)] != 0)) {
+				if((j > 1) && (sites[xyToId(i, j-1)])) {
 					StdOut.print("3: ");
 					weightedUf.union(xyToId(i, j), xyToId(i, j-1));
 					printStuff();
 				}
-				if((j < N) && (sites[xyToId(i, j+1)] != 0)) {
+				if((j < N) && (sites[xyToId(i, j+1)])) {
 					StdOut.print("4: ");
 					weightedUf.union(xyToId(i, j), xyToId(i, j+1));
 					printStuff();
 				}
 				
-				
-				if(weightedUf.connected(xyToId(i, j), N*N))
-					sites[xyToId(i, j)] = 2;
 			}
 			
 		}
@@ -71,31 +68,25 @@ public class Percolation {
 	
 	public boolean isOpen(int i, int j) {
 		if((i+j >= 2) && ((i <= N) && (j <= N)))
-			return (sites[xyToId(i, j)] > 0);
+			return (sites[xyToId(i, j)]);
 		else 
 			throw new IndexOutOfBoundsException("Coordinates are out of range");
 		
 	}
 	
 	public boolean isFull(int i, int j) {
-		if((i+j >= 2) && ((i <= N) && (j <= N))) {
-			switch(sites[xyToId(i, j)]) {
-				case 0:
-					return false;
-				case 1:
-					return false;
-				case 2: 
-					return true;
-				default:
-					return false;
-			}
+		if((i+j >= 2) && (i+j <= N*2)) {
+			if(isOpen(i, j))
+				return weightedUf.connected(xyToId(i, j), N*N);
+			else
+				return false;
 		}
 		else {
 			throw new IndexOutOfBoundsException("Coordinates are out of range");
 		}
 	}
 	
-	public boolean peroclates() {
+	public boolean percolates() {
 		return weightedUf.connected(N*N, N*N+1);
 	}
 	
@@ -116,18 +107,20 @@ public class Percolation {
 	
 	public static void main(String[] args) {
 		Percolation perc = new Percolation(4);
-		perc.printStuff();
+		StdOut.print("a: ");
 		perc.open(2, 3);
-		perc.printStuff();
+		StdOut.print("b: ");
 		perc.open(3, 3);
-		perc.printStuff();
+		StdOut.print("c: ");
 		perc.open(1, 3);
-		perc.printStuff();
+		StdOut.print("d: ");
 		perc.open(4, 3);
+		StdOut.print("e: ");
+		perc.open(3, 2);
 		
 		
-		StdOut.println(perc.peroclates());
-		StdOut.println(perc.isFull(1, 3));
+		StdOut.println(perc.percolates());
+		StdOut.println(perc.isFull(3, 2));
 		
 		
 	}
