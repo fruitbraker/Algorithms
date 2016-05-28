@@ -1,14 +1,14 @@
+import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-	
 	private int N;
 	private WeightedQuickUnionUF weightedUf;
 	private boolean[] sites;
 	private boolean percolates;
 	
 	public Percolation(int N) {
-		if(N > 0) {
+		if (N > 0) {
 			this.N = N;
 			sites = new boolean[N*N];
 			percolates = false;
@@ -21,25 +21,25 @@ public class Percolation {
 	
 	//i = row, j = column
 	public void open(int i, int j) {
-		if((i+j >= 2) && ((i <= N) && (j <= N))) {
-			if(!sites[xyToId(i, j)]) {
+		if ((i+j >= 2) && ((i <= N) && (j <= N))) {
+			if (!sites[xyToId(i, j)]) {
 				sites[xyToId(i, j)] = true;
 				
 				
-				if((i > 1) && (sites[xyToId(i-1, j)])) {
+				if ((i > 1) && (sites[xyToId(i-1, j)])) {
 					weightedUf.union(xyToId(i, j), xyToId(i-1, j));
 				}
-				if((i < N) && (sites[xyToId(i+1, j)])) {
+				if ((i < N) && (sites[xyToId(i+1, j)])) {
 					weightedUf.union(xyToId(i, j), xyToId(i+1, j));
 				}
-				if((j > 1) && (sites[xyToId(i, j-1)])) {
+				if ((j > 1) && (sites[xyToId(i, j-1)])) {
 					weightedUf.union(xyToId(i, j), xyToId(i, j-1));
 				}
-				if((j < N) && (sites[xyToId(i, j+1)])) {
+				if ((j < N) && (sites[xyToId(i, j+1)])) {
 					weightedUf.union(xyToId(i, j), xyToId(i, j+1));
 				}
 				
-				if(i == 1) {
+				if (i == 1) {
 					weightedUf.union(xyToId(i, j), N*N);
 				}
 				
@@ -50,7 +50,7 @@ public class Percolation {
 	}
 	
 	public boolean isOpen(int i, int j) {
-		if((i+j >= 2) && ((i <= N) && (j <= N)))
+		if ((i+j >= 2) && ((i <= N) && (j <= N)))
 			return (sites[xyToId(i, j)]);
 		else 
 			throw new IndexOutOfBoundsException("Coordinates are out of range");
@@ -58,16 +58,20 @@ public class Percolation {
 	}
 	
 	public boolean isFull(int i, int j) {
-		if((i+j >= 2) && (i+j <= N*2)) {
-			if(weightedUf.connected(xyToId(i, j), N*N)) {
-				if(i < N)
-					return true;
-				else if(isOpen(i, j)) {
+		if ((i+j >= 2) && (i+j <= N*2)) {
+			if (weightedUf.connected(xyToId(i, j), N*N) && isOpen(i, j)) {
+				if (i == N) {
 					percolates = true;
-					return true;
 				}
-				else
-					return false;
+				return true;
+//				if(i < N)
+//					return true;
+//				else if(isOpen(i, j)) {
+//					percolates = true;
+//					return true;
+//				}
+//				else
+//					return false;
 			}
 			else
 				return false;
@@ -85,25 +89,25 @@ public class Percolation {
 		return ((row-1) * N) + col-1;
 	}
 	
-//	
-//	public static void main(String[] args) {
-//		Percolation perc = new Percolation(4);
-//		StdOut.print("a: ");
-//		perc.open(2, 3);
-//		StdOut.print("b: ");
-//		perc.open(3, 3);
-//		StdOut.print("c: ");
-//		perc.open(1, 3);
-//		StdOut.print("d: ");
-//		perc.open(4, 3);
-//		StdOut.print("e: ");
-//		perc.open(3, 2);
-//		
-//		
-//		StdOut.println(perc.percolates());
-//		StdOut.println(perc.isFull(3, 2));
-//		
-//		
-//	}
+	
+	public static void main(String[] args) {
+		Percolation perc = new Percolation(4);
+		StdOut.print("a: ");
+		perc.open(2, 3);
+		StdOut.print("b: ");
+		perc.open(3, 3);
+		StdOut.print("c: ");
+		perc.open(1, 3);
+		StdOut.print("d: ");
+		perc.open(4, 3);
+		StdOut.print("e: ");
+		perc.open(3, 2);
+		
+		
+		StdOut.println(perc.percolates());
+		StdOut.println(perc.isFull(3, 2));
+		
+		
+	}
 	
 }
