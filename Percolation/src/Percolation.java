@@ -43,6 +43,7 @@ public class Percolation {
 					weightedUf.union(xyToId(i, j), N*N);
 				}
 				
+				
 			}
 		}
 		else
