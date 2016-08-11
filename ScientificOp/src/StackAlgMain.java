@@ -65,22 +65,22 @@ public class StackAlgMain {
 				valueStack.push(Float.parseFloat(token));
 			}
 		}
-		
-		System.out.println("-------------");
-
-		System.out.println(valueStack.peekAt(0));
-		System.out.println(valueStack.peekAt(1));
-		System.out.println(valueStack.peekAt(2));
-		System.out.println(valueStack.peekAt(3));
-		System.out.println(valueStack.peekAt(4));
-		
-		System.out.println("-------------");
-		
-		System.out.println(operatorStack.getStackLength() + "    " + operatorStack.getTopOfStackPos());
-		System.out.println(operatorStack.peekAt(0));
-		System.out.println(operatorStack.peekAt(1));
-		System.out.println(operatorStack.peekAt(2));
-		System.out.println(operatorStack.peekAt(3));
+//		
+//		System.out.println("-------------");
+//
+//		System.out.println(valueStack.peekAt(0));
+//		System.out.println(valueStack.peekAt(1));
+//		System.out.println(valueStack.peekAt(2));
+//		System.out.println(valueStack.peekAt(3));
+//		System.out.println(valueStack.peekAt(4));
+//		
+//		System.out.println("-------------");
+//		
+//		System.out.println(operatorStack.getStackLength() + "    " + operatorStack.getTopOfStackPos());
+//		System.out.println(operatorStack.peekAt(0));
+//		System.out.println(operatorStack.peekAt(1));
+//		System.out.println(operatorStack.peekAt(2));
+//		System.out.println(operatorStack.peekAt(3));
 //		System.out.println(operatorStack.peekAt(4));
 		
 		int precedenceTrack = 0, opTrack = 0, opTrackLength = operatorStack.getTopOfStackPos();
@@ -104,26 +104,26 @@ public class StackAlgMain {
 			}
 			opTrack++;
 		}
-		
-		System.out.println("-------------");
-
-		System.out.println(operatorStack.peekAt(0));
-		System.out.println(operatorStack.peekAt(1));
-		System.out.println(operatorStack.peekAt(2));
-		System.out.println(operatorStack.peekAt(3));
-		System.out.println(operatorStack.peekAt(4));
-		System.out.println("-------------");
-
-		System.out.println(valueStack.peekAt(0));
-		System.out.println(valueStack.peekAt(1));
-		System.out.println(valueStack.peekAt(2));
-		System.out.println(valueStack.peekAt(3));
-		System.out.println(valueStack.peekAt(4));
-		System.out.println(valueStack.getTopOfStackPos());
-		System.out.println("-----------");
-		
-		System.out.println(operatorStack.getTopOfStackPos());
-		System.out.println("-----------");
+//		
+//		System.out.println("-------------");
+//
+//		System.out.println(operatorStack.peekAt(0));
+//		System.out.println(operatorStack.peekAt(1));
+//		System.out.println(operatorStack.peekAt(2));
+//		System.out.println(operatorStack.peekAt(3));
+//		System.out.println(operatorStack.peekAt(4));
+//		System.out.println("-------------");
+//
+//		System.out.println(valueStack.peekAt(0));
+//		System.out.println(valueStack.peekAt(1));
+//		System.out.println(valueStack.peekAt(2));
+//		System.out.println(valueStack.peekAt(3));
+//		System.out.println(valueStack.peekAt(4));
+//		System.out.println(valueStack.getTopOfStackPos());
+//		System.out.println("-----------");
+//		
+//		System.out.println(operatorStack.getTopOfStackPos());
+//		System.out.println("-----------");
 		
 		opTrackLength = operatorStack.getTopOfStackPos();
 		for(int i=0; i<opTrackLength; i++) {
