@@ -8,28 +8,36 @@ public class StackAlgMain {
 	public static void main(String...args) {
 		final String operators = "/*-+";
 		
-		String op = "4+(4*9)/1";
+		String op = "((7*7+9)+(6+6))";
 		int length = op.length();
-		boolean isOneOp = false, seenLeftParen = false, seenRightParen = false;
+		boolean isOneOp = false, seenLeftParen = false, seenRightParen = false, shouldSkip = false;
 		
 		Stack<String> operatorStack = new Stack<String>();
 		Stack<Float> valueStack = new Stack<Float>();
 		
 		for(int i=0; i<op.length(); i++) {
 			String token = op.charAt(i) + "";
-			
+//			System.out.print(token + "              ");
 			if(token.equals("(")) {
 //				System.out.println("1");
 				seenLeftParen = true;
 				seenRightParen = false;
 				isOneOp = false;
+				shouldSkip = false;
 			} else if(operators.contains(token)) {
-//				System.out.println("2");
+//				System.out.print("2      ");
 				operatorStack.push(token);
-				if(!isOneOp && seenLeftParen) {
-//					System.out.println("2.5);
-					isOneOp = true;
-					continue;
+				if(seenLeftParen) {
+					if(!shouldSkip && !isOneOp) {
+//						System.out.println("2.33");
+						isOneOp = true;
+					} else if(isOneOp && !shouldSkip) {
+//						System.out.println("2.66");
+						isOneOp = false;
+						shouldSkip = true;
+					}
+				} else {
+//					System.out.println();
 				}
 			} else if(token.equals(")")) {
 				if(!seenRightParen) {
@@ -37,6 +45,7 @@ public class StackAlgMain {
 					seenRightParen = true;
 					seenLeftParen = false;
 					if(isOneOp) {
+//						System.out.println("3.5");
 						float x = valueStack.pop();
 						float y = valueStack.pop();
 						String operation = operatorStack.pop();
@@ -65,7 +74,7 @@ public class StackAlgMain {
 				valueStack.push(Float.parseFloat(token));
 			}
 		}
-//		
+		
 //		System.out.println("-------------");
 //
 //		System.out.println(valueStack.peekAt(0));
@@ -86,26 +95,25 @@ public class StackAlgMain {
 		int precedenceTrack = 0, opTrack = 0, opTrackLength = operatorStack.getTopOfStackPos();
 		
 		while(opTrack < opTrackLength) {
-			String operator = operatorStack.peekAt(opTrack);
+			String operator = operatorStack.peekAt(precedenceTrack);
+//			System.out.print(operator + "   ");
 			if(operator.equals("*")) {
 				float x = valueStack.popAt(precedenceTrack);
 				float y = valueStack.popAt(precedenceTrack);
 				operatorStack.popAt(opTrack);
 				valueStack.pushAt(x*y, precedenceTrack);
-				opTrackLength--;
 			} else if(operator.equals("/")) {
 				float x = valueStack.popAt(precedenceTrack);
 				float y = valueStack.popAt(precedenceTrack);
 				operatorStack.popAt(opTrack);
 				valueStack.pushAt(x/y, precedenceTrack);
-				opTrackLength--;
 			} else {
 				precedenceTrack++;
 			}
 			opTrack++;
 		}
-//		
-//		System.out.println("-------------");
+		
+//		System.out.println("\n-------------");
 //
 //		System.out.println(operatorStack.peekAt(0));
 //		System.out.println(operatorStack.peekAt(1));
@@ -140,6 +148,6 @@ public class StackAlgMain {
 			}
 		}
 		
-		System.out.println(valueStack.pop());
+		System.out.println("The answer is:  " + valueStack.pop());
 	}	
 }
