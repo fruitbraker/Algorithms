@@ -3,3 +3,5 @@
 RemoteSystemsTempFiles/
 /LinkedList/bin/.gitignore
 /Percolation/bin/percolation.zip
+/QueueStack/.classpath
+/QueueStack/.project
