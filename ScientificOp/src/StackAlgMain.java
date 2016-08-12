@@ -8,7 +8,14 @@ public class StackAlgMain {
 	public static void main(String...args) {
 		final String operators = "/*-+";
 		
+		
+		
+		/*
+		 * There has to be no spaces. Parentheses must be correct.
+		 * Value operations: +,-,*,/
+		 */
 		String op = "((7*7+9)+(6+6))";
+		
 		int length = op.length();
 		boolean isOneOp = false, seenLeftParen = false, seenRightParen = false, shouldSkip = false;
 		
