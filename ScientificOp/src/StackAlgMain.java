@@ -14,7 +14,7 @@ public class StackAlgMain {
 		 * There has to be no spaces. Parentheses must be correct.
 		 * Value operations: +,-,*,/
 		 */
-		String op = "((7*7+9)+(6+6))";
+		String op = "(3-4)*6+(8/4)";
 		
 		int length = op.length();
 		boolean isOneOp = false, seenLeftParen = false, seenRightParen = false, shouldSkip = false;
@@ -62,13 +62,13 @@ public class StackAlgMain {
 							valueStack.push(x+y);
 							break;
 						case "-":
-							valueStack.push(x-y);
+							valueStack.push(y-x);
 							break;
 						case "*":
 							valueStack.push(x*y);
 							break;
 						case "/":
-							valueStack.push(x/y);
+							valueStack.push(y/x);
 							break;
 						default:
 							System.err.println("Something dun goofed. switch statements");
@@ -82,22 +82,22 @@ public class StackAlgMain {
 			}
 		}
 		
-//		System.out.println("-------------");
-//
-//		System.out.println(valueStack.peekAt(0));
-//		System.out.println(valueStack.peekAt(1));
-//		System.out.println(valueStack.peekAt(2));
-//		System.out.println(valueStack.peekAt(3));
-//		System.out.println(valueStack.peekAt(4));
-//		
-//		System.out.println("-------------");
-//		
-//		System.out.println(operatorStack.getStackLength() + "    " + operatorStack.getTopOfStackPos());
-//		System.out.println(operatorStack.peekAt(0));
-//		System.out.println(operatorStack.peekAt(1));
-//		System.out.println(operatorStack.peekAt(2));
-//		System.out.println(operatorStack.peekAt(3));
-//		System.out.println(operatorStack.peekAt(4));
+		// System.out.println("-------------");
+
+		// System.out.println(valueStack.peekAt(0));
+		// System.out.println(valueStack.peekAt(1));
+		// System.out.println(valueStack.peekAt(2));
+		// System.out.println(valueStack.peekAt(3));
+		// System.out.println(valueStack.peekAt(4));
+		
+		// System.out.println("-------------");
+		
+		// System.out.println(operatorStack.getStackLength() + "    " + operatorStack.getTopOfStackPos());
+		// System.out.println(operatorStack.peekAt(0));
+		// System.out.println(operatorStack.peekAt(1));
+		// System.out.println(operatorStack.peekAt(2));
+		// System.out.println(operatorStack.peekAt(3));
+		// System.out.println(operatorStack.peekAt(4));
 		
 		int precedenceTrack = 0, opTrack = 0, opTrackLength = operatorStack.getTopOfStackPos();
 		
