@@ -12,6 +12,7 @@ public class StackAlgMain {
 		
 		/*
 		 * There has to be no spaces. Parentheses must be correct.
+		 * Some inputs may not work.
 		 * Value operations: +,-,*,/
 		 */
 		String op = "(3-4)*6+(8/4)";
